@@ -38,7 +38,6 @@ public class Tela_Inicial extends javax.swing.JFrame {
         initComponents();
         new Menu().teste();
         try {
-            
             controller = new Controller();
             controller.lerArquivoIndex();
             addCampoTexto();
@@ -473,7 +472,7 @@ public class Tela_Inicial extends javax.swing.JFrame {
                 public void run() {
                     if (SystemTray.isSupported()) {
                         SystemTray tray = SystemTray.getSystemTray();
-                        Image image = Toolkit.getDefaultToolkit().getImage("C:\\Program Files (x86)\\CS-P7GO\\p7go.jpg");
+                        Image image = Toolkit.getDefaultToolkit().getImage("C:\\CS-P7GO\\p7go.jpg");
                         PopupMenu popup = new PopupMenu();
                         MenuItem item = new MenuItem("Abrir CS-P7GO");
                         MenuItem item2 = new MenuItem("Encerrar CS-P7GO");

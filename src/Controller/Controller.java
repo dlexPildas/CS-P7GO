@@ -43,10 +43,11 @@ public class Controller {
     private void verificar(){
         new Thread(){
             public void run(){
-                timer = new Timer(200000, new ActionListener() {
+                timer = new Timer(50000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
+                            lerArquivoIndex();
                             iniciarServico("Petros - Automação de Bombas CompanyTec - Frente de Caixa", caminhoAutomacaoIniciar);
                             String txt = lerLog(caminhoLog);
                             enviarEmail(txt);
@@ -126,7 +127,7 @@ public class Controller {
     public Iterator lerArquivoIndex() throws FileNotFoundException, IOException{
         
         LinkedList l = new LinkedList();
-        File f = new File("C:\\Program Files (x86)\\CS-P7GO\\Index.txt");
+        File f = new File("C:\\CS-P7GO\\Index.txt");
         FileReader fr = new FileReader(f);
         BufferedReader br = new BufferedReader(fr);
         String text;
@@ -146,7 +147,7 @@ public class Controller {
     
     //Método para escrever no arquivo que que contém o caminho do outros arquivos
     public void escreverArquivoIndex(Iterator i) throws IOException{
-        File f = new File("C:\\Program Files (x86)\\CS-P7GO\\Index.txt");
+        File f = new File("C:\\CS-P7GO\\Index.txt");
         FileWriter fw = new FileWriter(f);
         BufferedWriter bw = new BufferedWriter(fw);
         String txt;
