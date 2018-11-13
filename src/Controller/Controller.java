@@ -23,12 +23,13 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
 
 public class Controller {
     LinkedList listaServicos = new LinkedList();
     Timer timer;
     String caminhoLog, caminhoAutomacaoIniciar, caminhoAutomacaoParar;
-    
+    String nomePosto;
     
     
     public Controller() throws IOException{
@@ -43,7 +44,7 @@ public class Controller {
     private void verificar(){
         new Thread(){
             public void run(){
-                timer = new Timer(50000, new ActionListener() {
+                timer = new Timer(20000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
@@ -117,13 +118,18 @@ public class Controller {
         int count = 3;
         while ( (text = bf.readLine()) != null ){
             if (text.contains("erro")){
+                while(count>=0){
+                    text += "\n"+ bf.readLine();
+                    count--;
+                }
+                System.out.println(text);
                 return text;
             }
         }
         return null;
     }
     
-    //Método para ler arquivo que que contém o caminho do outros arquivos
+    //Método para ler arquivo que que contém o caminho do outros arquivos e o nome do posto
     public Iterator lerArquivoIndex() throws FileNotFoundException, IOException{
         
         LinkedList l = new LinkedList();
@@ -138,6 +144,8 @@ public class Controller {
         l.add(caminhoAutomacaoIniciar);
         caminhoAutomacaoParar = (text = br.readLine());
         l.add(caminhoAutomacaoParar);
+        nomePosto = (text = br.readLine());
+        l.add(nomePosto);
         
         while ( (text = br.readLine()) != null){
             l.add(text);
@@ -155,6 +163,7 @@ public class Controller {
             txt = (String)i.next();
             bw.append(txt+"\n");
         }
+        bw.append(nomePosto+"\n");
         
         bw.close();
             
@@ -175,9 +184,11 @@ public class Controller {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
+        
 
         Session session = Session.getDefaultInstance(props,
                     new javax.mail.Authenticator() {
+                        @Override
                          protected PasswordAuthentication getPasswordAuthentication() 
                          {
                                return new PasswordAuthentication("csp7go@gmail.com", "csp7go2018");
@@ -196,7 +207,7 @@ public class Controller {
                          .parse("oliveiradaniel11@hotmail.com");  
 
               message.setRecipients(Message.RecipientType.TO, toUser);
-              message.setSubject("Alerta! Erro no log!");//Assunto
+              message.setSubject("Posto: "+nomePosto);//Assunto
               message.setText(mensagem);
               /**Método para enviar a mensagem criada*/
               Transport.send(message);
