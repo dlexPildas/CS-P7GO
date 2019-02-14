@@ -44,7 +44,7 @@ public class Controller {
     private void verificar(){
         new Thread(){
             public void run(){
-                timer = new Timer(20000, new ActionListener() {
+                timer = new Timer(100000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
@@ -122,7 +122,6 @@ public class Controller {
                     text += "\n"+ bf.readLine();
                     count--;
                 }
-                System.out.println(text);
                 return text;
             }
         }
